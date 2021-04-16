@@ -26,7 +26,7 @@ Mutate by adding number of random shape/text to image
 ## Various art creation showcase
 Showcase uses default options + various small tweaks. 7500 Generations
 Base:
-![Original](https://github.com/Th3NiKo/Genetic-algorithm-image-reconstruction/image.jpg)
+![Original](https://raw.githubusercontent.com/Th3NiKo/Genetic-algorithm-image-reconstruction/main/original.jpg)
 
 
 
