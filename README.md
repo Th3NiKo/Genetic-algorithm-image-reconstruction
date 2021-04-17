@@ -1,5 +1,5 @@
 # Genetic algorithm image reconstruction
-## _Script for reconstructing images using random shapes placement_
+## _Script for reconstructing B&W images using random shapes placement_
 
 ## Installation
 ```sh
@@ -9,7 +9,7 @@ pip install -r requirements.txt
 ## Genetic alghorithm key functions / parameters
 
 ### Generation / population
-One generation consist of n (default: 50) images containing various shapes/texts
+One generation consist of n (default: 50) B&W images containing various shapes/texts
 
 ### Crossover
 Various functions for crossover:
