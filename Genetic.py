@@ -45,7 +45,7 @@ def drawLine(imageDraw):
 
     imageDraw.line([(y1,x1), (y2,x2)], fill=color, width=thickness_value)
 
-def drawText(size=20):
+def drawText(imageDraw, size=20):
     font = ImageFont.truetype("arial.ttf", size)
     text_length = random.randint(1,3)
     text = ''.join(random.choice(string.ascii_letters) for i in range(text_length))
@@ -54,14 +54,14 @@ def drawText(size=20):
     y = random.randint(0,original_height-1)
 
     color = (random.randint(0,255))
-    imaegDraw.text((y,x), text, fill=color, font=font)
+    imageDraw.text((y,x), text, fill=color, font=font)
 
 #Function to add shape with random proporties on image x number of times
 def add_random_shape_to_image(img, number):
     image_filled = img.copy()
     for i in range(0, number):
         draw = ImageDraw.Draw(image_filled)
-        drawRectangle(draw)
+        drawText(draw)
     return image_filled
 
 #Create first generation with random population
@@ -92,13 +92,13 @@ def blending(img1, img2):
 def random_horizontal_swap(img1, img2):
     img1_arr, img2_arr = images2arrays(img1, img2)
     horizontal_random_choice = np.random.choice(original_width, int(original_width/2), replace=False)
-    img1_arr[which2] = img2_arr[which2]
+    img1_arr[horizontal_random_choice] = img2_arr[horizontal_random_choice]
     return Image.fromarray(img1_arr)
 
 def random_vertical_swap(img1, img2):
     img1_arr, img2_arr = images2arrays(img1, img2)
     vertical_random_choice = np.random.choice(original_height, int(original_height/2), replace=False)
-    img1_arr[:,which2] = img2_arr[:,which2]
+    img1_arr[:,vertical_random_choice] = img2_arr[:,vertical_random_choice]
     return Image.fromarray(img1_arr)
 
 def half_vertical_swap(img1, img2):
@@ -114,7 +114,7 @@ def half_horizontal_swap(img1, img2):
     return np.hstack((img1_half, img2_half))
 
 def crossover(img1, img2):
-    return blending(img1, img2)
+    return random_horizontal_swap(img1, img2)
 
 #Mutate image adding random shape number of times
 def mutate(img, number):
