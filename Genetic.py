@@ -35,7 +35,7 @@ def drawRectangle(imageDraw, size=10):
 
 def drawLine(imageDraw):
     x1 = random.randint(0,original_width-1)
-    y2 = random.randint(0,original_height-1)
+    y1 = random.randint(0,original_height-1)
 
     x2 = random.randint(0,original_width-1)
     y2 = random.randint(0,original_height-1)
