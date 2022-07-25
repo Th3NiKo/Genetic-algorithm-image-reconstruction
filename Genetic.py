@@ -11,7 +11,7 @@ import numpy as np
 import imageio # For gif saving
 
 #Load and show original image for tracking (convert to black and white)
-original_image = Image.open('image.jpg').convert('L')
+original_image = Image.open("image.jpg").convert("L")
 original_height, original_width  = original_image.size
 cv2.imshow("Original", np.array(original_image))
 cv2.imwrite("original.jpg",np.array(original_image))
@@ -58,7 +58,7 @@ def draw_text(image, size=20):
     """Draw random text on image with given size."""
     font = ImageFont.truetype("arial.ttf", size)
     text_length = random.randint(1,3)
-    text = ''.join(random.choice(string.ascii_letters) for i in range(text_length))
+    text = "".join(random.choice(string.ascii_letters) for i in range(text_length))
 
     x = random.randint(0,original_width-1)
     y = random.randint(0,original_height-1)
@@ -80,7 +80,7 @@ def create_random_population(size):
     """Create first generation with random population."""
     first_population = []
     for _ in range(0, size):
-        blank_image = Image.new('L', (original_height, original_width))
+        blank_image = Image.new("L", (original_height, original_width))
         filled_image = add_random_shape_to_image(blank_image, MUTATION_STRENGTH)
         first_population.append(filled_image)
     return first_population
@@ -166,28 +166,28 @@ def whole_pipeline():
     """Go through whole pipeline and execute it."""
     save_gif = [] #Creating empty frames list for gif saving at the end
 
-    #Create first generation
+    # Create first generation
     population = create_random_population(POPULATION_NUMBER)
 
-    #Loop through generations 
+    # Loop through generations
     for generation in range(0, NUMBER_OF_GENERATIONS):
 
-        #Calculate similarity of each image in population to original image
+        # Calculate similarity of each image in population to original image
         fitnesses = []
         for img in population:
             actual_fitness = evaluate_fitness(img)
             fitnesses.append(actual_fitness)
 
-        #Get ids of best images in population
+        # Get ids of best images in population
         top_population_ids = np.argsort(fitnesses)[-ELITISM_NUMBER:]
 
-        #Start creating new population for next generation
+        # Start creating new population for next generation
         new_population = []
 
-        #Connect parent into pairs
+        # Connect parent into pairs
         parents_list = get_parents(population, fitnesses)
 
-        #Create childs
+        # Create childs
         for i in range(0, POPULATION_NUMBER):
             new_img = crossover(parents_list[i][0], parents_list[i][1])
             #Mutate
@@ -195,30 +195,30 @@ def whole_pipeline():
                 new_img = mutate(new_img, MUTATION_STRENGTH)
             new_population.append(new_img)
 
-        #Elitism transfer
+        # Elitism transfer
         if ELITISM:
             for ids in top_population_ids:
                 new_population.append(population[ids])
 
-        #Print info every x generations
+        # Print info every x generations
         if generation % PRINT_EVERY_GEN == 0:
             print(generation)
             print(fitnesses[top_population_ids[0]])
 
-        #Get best actual image and show it
+        # Get best actual image and show it
         open_cv_image = np.array(population[top_population_ids[0]])
         cv2.imshow("test", open_cv_image)
 
-        #Gif creation
+        # Gif creation
         if generation % SAVE_FRAME_FOR_GIF_EVERY == 0:
             save_gif.append(open_cv_image)
 
         cv2.waitKey(1)
         population = new_population
 
-    #Save gif and best output
-    imageio.mimsave('output_gif.gif', save_gif)
-    cv2.imwrite('output_best.jpg', open_cv_image) 
+    # Save gif and best output
+    imageio.mimsave("output_gif.gif", save_gif)
+    cv2.imwrite("output_best.jpg", open_cv_image) 
 
 if __name__ == "__main__":
     whole_pipeline()
